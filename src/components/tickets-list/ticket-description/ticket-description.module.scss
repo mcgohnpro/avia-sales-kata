@@ -1,0 +1,25 @@
+@import '/src/styles/variables.scss';
+
+.description {
+  display: flex;
+  justify-content: space-between;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.column {
+  width: 141px;
+}
+
+.title {
+  color: $font-color-light;
+  text-transform: uppercase;
+  line-height: 150%;
+}
+
+.data {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 150%;
+}

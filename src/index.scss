@@ -1,0 +1,9 @@
+@import '/src/styles/variables.scss';
+
+body {
+  background-color: #f3f7fa;
+  font-family: 'Open Sans', sans-serif;
+  color: $font-color-praimary;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
