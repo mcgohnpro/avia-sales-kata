@@ -1,17 +1,19 @@
+import styles from './radio-filters.module.scss'
+
 export default function RadioFilters() {
   return (
-    <div className="filters">
-      <label htmlFor="cheapest">
+    <div className={[styles.filters, styles['filters--margin']].join(' ')}>
+      <label className={styles.label} htmlFor="cheapest">
         <input type="radio" id="cheapest" name="filters" />
-        самый дешевый
+        <span>самый дешевый</span>
       </label>
-      <label htmlFor="fastest">
+      <label className={styles.label} htmlFor="fastest">
         <input type="radio" id="fastest" name="filters" />
-        самый быстрый
+        <span>самый быстрый</span>
       </label>
-      <label htmlFor="optimal">
+      <label className={styles.label} htmlFor="optimal">
         <input type="radio" id="optimal" name="filters" />
-        самый быстрый
+        <span>оптимальный</span>
       </label>
     </div>
   )

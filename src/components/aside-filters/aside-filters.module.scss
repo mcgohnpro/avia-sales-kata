@@ -1,0 +1,84 @@
+@import '/src/styles/variables.scss';
+
+.filter {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  backdrop-filter: blur(4px);
+  z-index: 1;
+  //TODO Добавить интерактив появления фильтра размытия
+  visibility: hidden;
+}
+
+.aside {
+  width: 232px;
+  height: max-content;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  background-color: $content-background-color;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    visibility: hidden;
+    position: absolute;
+    //TODO Добавить интерактив появления модального окна, которое будет запускаться по кнопке
+    z-index: 3;
+  }
+}
+
+.header {
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  margin-block: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.list {
+  list-style: none;
+  margin-block: 0;
+  padding-inline: 0;
+  font-size: 13px;
+}
+
+.list-item {
+  height: 40px;
+  line-height: 40px;
+
+  &:hover {
+    background-color: rgba($color: $hover-background-color, $alpha: 1);
+    cursor: pointer;
+  }
+}
+
+.label {
+  padding-left: 50px;
+  display: flex;
+  font-size: 13px;
+  cursor: pointer;
+  align-items: center;
+  user-select: none;
+}
+
+.check-input {
+  position: absolute;
+  appearance: none;
+  &:checked + .check-box {
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0.5' y='0.5' width='19' height='19' rx='1.5' stroke='%232196F3'/%3E%3Cpath d='M8.28571 14L4 10.1612L5.20857 9.0787L8.28571 11.8273L14.7914 6L16 7.09021L8.28571 14Z' fill='%232196F3'/%3E%3C/svg%3E%0A");
+  }
+}
+
+.check-box {
+  position: absolute;
+  margin-left: -30px;
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0.5' y='0.5' width='19' height='19' rx='1.5' stroke='%239ABBCE'/%3E%3C/svg%3E");
+}
