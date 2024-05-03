@@ -10,6 +10,9 @@
 
 .column {
   width: 141px;
+  @media (max-width: 542px) {
+    width: 30%;
+  }
 }
 
 .title {

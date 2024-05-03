@@ -1,9 +1,16 @@
+/* eslint-disable no-unused-vars */
+import { useState, useEffect, useRef } from 'react'
+
 import Filters from '../aside-filters'
 import RadioFilters from '../radio-filters'
 import TicketsList from '../tickets-list'
 import logo from '../../assets/Logo.png'
+import useFetch from '../../hooks/useFetch'
+import reducer from '../../store/reducer'
 
 import styles from './App.module.scss'
+
+const URL_API = 'https://aviasales-test-api.kata.academy/search'
 
 export default function App() {
   return (
@@ -22,3 +29,37 @@ export default function App() {
     </div>
   )
 }
+
+// рабочий код получения билетов
+// const [error, setError] = useState()
+// const [tickets, setTickets] = useState([])
+// useEffect(() => {
+//   const url = new URL(URL_API)
+//   url.pathname = 'search'
+//   fetch(url)
+//     .then((response) => {
+//       if (response.ok) {
+//         return response.json()
+//       }
+//       throw response
+//     })
+//     .catch((err) => {
+//       setError(err)
+//     })
+//     .then(({ searchId }) => {
+//       url.pathname = 'tickets'
+//       url.searchParams.set('searchId', searchId)
+//       return fetch(url).then((response) => {
+//         if (response.ok) {
+//           return response.json()
+//         }
+//         throw response
+//       })
+//     })
+//     .catch((err) => {
+//       setError(err)
+//     })
+//     .then((json) => {
+//       setTickets(json.tickets)
+//     })
+// }, [])

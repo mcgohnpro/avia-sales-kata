@@ -22,6 +22,7 @@
   margin-inline: auto;
   @media (max-width: 768px) {
     width: min-content;
+    padding-top: 20px;
   }
 }
 
@@ -33,6 +34,10 @@
 
 .search-results {
   width: 502px;
+  @media (max-width: 542px) {
+    width: 90vw;
+    // max-width: max-content;
+  }
 }
 
 .see-more-button {
@@ -45,6 +50,7 @@
   font-weight: 600;
   text-transform: uppercase;
   transition: background-color 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
   cursor: pointer;
   &:active {
     background-color: rgba($color: $font-color-secondary, $alpha: 0.5);

@@ -10,6 +10,7 @@
   font-weight: 600;
   border: 1px solid $border-color;
   overflow: hidden;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
 
   &--margin {
     margin-bottom: 20px;
@@ -26,6 +27,10 @@
 
   &:not(:last-child) {
     border-right: 1px solid $border-color;
+  }
+
+  @media (max-width: 542px) {
+    font-size: 10px;
   }
 
   input {

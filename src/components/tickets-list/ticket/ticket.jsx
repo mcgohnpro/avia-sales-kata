@@ -1,6 +1,6 @@
-import TicketDescription from '../ticket-description'
 import logo from '../../../assets/S7 Logo.png'
 
+import TicketDescription from './ticket-description'
 import styles from './ticket.module.scss'
 
 export default function Ticket() {
