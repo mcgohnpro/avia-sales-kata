@@ -9,7 +9,7 @@ const initialState = {
   optimal: false,
 }
 
-const reducer = (state = initialState, { type }) => {
+const filterReducer = (state = initialState, { type }) => {
   switch (type) {
     case 'ALL_TICKETS':
       return { ...state, all: !state.all, without: !state.all, one: !state.all, two: !state.all }
@@ -37,4 +37,4 @@ const reducer = (state = initialState, { type }) => {
   }
 }
 
-export default reducer
+export default filterReducer

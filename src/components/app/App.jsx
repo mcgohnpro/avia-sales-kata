@@ -1,18 +1,22 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 
 import Filters from '../aside-filters'
 import RadioFilters from '../radio-filters'
 import TicketsList from '../tickets-list'
+import Loader from '../loader'
 import logo from '../../assets/Logo.png'
 import useFetch from '../../hooks/useFetch'
-import reducer from '../../store/reducer'
+import * as ticketsActions from '../../store/actions/tickets-actions'
 
 import styles from './App.module.scss'
 
-const URL_API = 'https://aviasales-test-api.kata.academy/search'
-
-export default function App() {
+function App({ tickets, addTickets }) {
+  const { loading, data, fetchNow } = useFetch()
+  useEffect(() => {
+    addTickets(data.tickets)
+  }, [data])
   return (
     <div className={styles.wrapper}>
       <header className={[styles.header, styles['header--margin']].join(' ')}>
@@ -26,40 +30,15 @@ export default function App() {
           <input className={styles['see-more-button']} type="button" value="Показать еще 5 билетов!" />
         </section>
       </main>
+      <Loader loading={loading} />
     </div>
   )
 }
 
-// рабочий код получения билетов
-// const [error, setError] = useState()
-// const [tickets, setTickets] = useState([])
-// useEffect(() => {
-//   const url = new URL(URL_API)
-//   url.pathname = 'search'
-//   fetch(url)
-//     .then((response) => {
-//       if (response.ok) {
-//         return response.json()
-//       }
-//       throw response
-//     })
-//     .catch((err) => {
-//       setError(err)
-//     })
-//     .then(({ searchId }) => {
-//       url.pathname = 'tickets'
-//       url.searchParams.set('searchId', searchId)
-//       return fetch(url).then((response) => {
-//         if (response.ok) {
-//           return response.json()
-//         }
-//         throw response
-//       })
-//     })
-//     .catch((err) => {
-//       setError(err)
-//     })
-//     .then((json) => {
-//       setTickets(json.tickets)
-//     })
-// }, [])
+const mapStateToProps = (store) => {
+  return {
+    tickets: store.tickets,
+  }
+}
+
+export default connect(mapStateToProps, ticketsActions)(App)

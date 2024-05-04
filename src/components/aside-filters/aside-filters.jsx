@@ -1,19 +1,17 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
-import * as actions from '../../store/actions'
+import * as filtersActions from '../../store/actions/filters-actions'
 
 import styles from './aside-filters.module.scss'
 
 function Filters({
-  filtersStore,
+  filtersProps,
   setAllTicketsFilter,
   setWithoutTransferFilter,
   setOneTransferFilter,
   setTwoTransferFilter,
 }) {
-  const { all, without, one, two } = filtersStore
+  const { all, without, one, two } = filtersProps
   return (
     <>
       <div className={styles.filter} />
@@ -78,9 +76,9 @@ function Filters({
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (store) => {
   return {
-    filtersStore: state,
+    filtersProps: store.filter,
   }
 }
-export default connect(mapStateToProps, actions)(Filters)
+export default connect(mapStateToProps, filtersActions)(Filters)

@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux'
 
-import * as actions from '../../store/actions'
+import * as filterActions from '../../store/actions/filters-actions'
 
 import styles from './radio-filters.module.scss'
 
@@ -25,10 +24,10 @@ function RadioFilters({ filtersRadio, setCheapest, setFastest, setOptimal }) {
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (store) => {
   return {
-    filtersRadio: state,
+    filtersRadio: store.filter,
   }
 }
 
-export default connect(mapStateToProps, actions)(RadioFilters)
+export default connect(mapStateToProps, filterActions)(RadioFilters)

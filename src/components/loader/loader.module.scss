@@ -1,0 +1,54 @@
+@import '/src/styles/variables.scss';
+
+.loader {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4.8px;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+.loader::after {
+  content: '';
+  width: 0%;
+  height: 4.8px;
+  background-color: #fff;
+  background-image: linear-gradient(
+    45deg,
+    $font-color-secondary 25%,
+    transparent 25%,
+    transparent 50%,
+    $font-color-secondary 50%,
+    $font-color-secondary 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 15px 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  animation:
+    animFw 15s ease-in-out forwards,
+    animBG 2s infinite linear;
+}
+
+@keyframes animBG {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -45px 0;
+  }
+}
+
+@keyframes animFw {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
