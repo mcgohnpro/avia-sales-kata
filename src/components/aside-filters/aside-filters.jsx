@@ -11,7 +11,7 @@ function Filters({
   setOneTransferFilter,
   setTwoTransferFilter,
 }) {
-  const { all, without, one, two } = filtersProps
+  const { allTransfers, withoutTrasnfers, oneTransfer, twoTransfers } = filtersProps
   return (
     <>
       <div className={styles.filter} />
@@ -24,7 +24,7 @@ function Filters({
                 className={styles['check-input']}
                 type="checkbox"
                 id="1"
-                checked={all}
+                checked={allTransfers}
                 onChange={setAllTicketsFilter}
               />
               <span className={styles['check-box']} />
@@ -37,7 +37,7 @@ function Filters({
                 className={styles['check-input']}
                 type="checkbox"
                 id="2"
-                checked={without}
+                checked={withoutTrasnfers}
                 onChange={setWithoutTransferFilter}
               />
               <span className={styles['check-box']} />
@@ -50,7 +50,7 @@ function Filters({
                 className={styles['check-input']}
                 type="checkbox"
                 id="3"
-                checked={one}
+                checked={oneTransfer}
                 onChange={setOneTransferFilter}
               />
               <span className={styles['check-box']} />
@@ -63,7 +63,7 @@ function Filters({
                 className={styles['check-input']}
                 type="checkbox"
                 id="4"
-                checked={two}
+                checked={twoTransfers}
                 onChange={setTwoTransferFilter}
               />
               <span className={styles['check-box']} />

@@ -17,7 +17,7 @@ function RadioFilters({ filtersRadio, setCheapest, setFastest, setOptimal }) {
         <span>самый быстрый</span>
       </label>
       <label className={styles.label} htmlFor="optimal">
-        <input type="radio" id="optimal" name="filters" checked={optimal} onChange={setOptimal} />
+        <input disabled type="radio" id="optimal" name="filters" checked={optimal} onChange={setOptimal} />
         <span>оптимальный</span>
       </label>
     </div>

@@ -1,0 +1,9 @@
+.wrapper-notiffications {
+  display: flex;
+  flex-direction: column-reverse;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  row-gap: 10px;
+}

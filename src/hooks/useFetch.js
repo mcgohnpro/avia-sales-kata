@@ -14,18 +14,16 @@ import FetchError from '../errors/fetchError'
 const url = new URL(URL_API)
 
 const initialState = {
-  data: {
-    tickets: [],
-    stop: false,
-  },
-  error: undefined,
+  tickets: [],
+  stop: false,
 }
 // TODO либо вынести error или loading вернуть обратно
 const useFetch = () => {
   const retryFetchCount = useRef(RETRY_FETCH_COUNT)
   const searchID = useRef()
-  const [status, setStatus] = useState(initialState)
+  const [data, setData] = useState(initialState)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState()
 
   function getSearchIdFromAPI() {
     if (!searchID.current) {
@@ -42,9 +40,7 @@ const useFetch = () => {
           return json.searchId
         })
         .catch((err) => {
-          setStatus((prevState) => {
-            return { ...prevState, error: err }
-          })
+          setError(err)
         })
         .finally(() => {
           url.pathname = ''
@@ -72,16 +68,23 @@ const useFetch = () => {
         })
         .then((json) => {
           retryFetchCount.current = RETRY_FETCH_COUNT
-          setStatus((prevState) => {
-            return {
-              ...prevState,
-              data: {
-                tickets: json.tickets.map((item) => {
-                  return { ...item, key: getId() }
-                }),
-                stop: json.stop,
-              },
-            }
+          // setStatus((prevState) => {
+          //   return {
+          //     ...prevState,
+          //     data: {
+          //       tickets: json.tickets.map((item) => {
+          //         return { ...item, key: getId() }
+          //       }),
+          //       stop: json.stop,
+          //     },
+          //   }
+          // })
+
+          setData({
+            tickets: json.tickets.map((item) => {
+              return { ...item, key: getId() }
+            }),
+            stop: json.stop,
           })
 
           if (!json.stop) {
@@ -100,13 +103,11 @@ const useFetch = () => {
             }, DELAY_RETRY_FETCH)
           } else {
             setLoading(false)
-            setStatus((prevState) => {
-              return { ...prevState, error: err }
-            })
+            setError(err)
           }
         })
         .finally(() => {
-          if (status.data.stop) {
+          if (data.stop) {
             setLoading(false)
           }
         })
@@ -117,7 +118,7 @@ const useFetch = () => {
     fetchNow()
   }, [])
 
-  return { ...status, loading, fetchNow }
+  return { data, loading, error, fetchNow }
 }
 
 export default useFetch
