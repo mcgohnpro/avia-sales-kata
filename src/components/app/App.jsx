@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
@@ -9,12 +8,13 @@ import Notification from '../notifications'
 import Loader from '../loader'
 import useFetch from '../../hooks/useFetch'
 import * as ticketsActions from '../../store/actions/tickets-actions'
+import * as filtersActions from '../../store/actions/filters-actions'
 import getId from '../../utils/getId'
 import logo from '../../assets/Logo.png'
 
 import styles from './App.module.scss'
 
-function App({ tickets, addTickets }) {
+function App({ addTickets, setModalState }) {
   const [errors, setErrors] = useState([])
   const { loading, data, error } = useFetch()
   useEffect(() => {
@@ -30,21 +30,28 @@ function App({ tickets, addTickets }) {
     }
   }, [error])
 
-  useEffect(() => {
-    setErrors((prevState) => {
-      return [...prevState, { id: getId(), title: 'Ошибка', message: 'Текст ошибки' }]
-    })
-  }, [])
-
   return (
     <div className={styles.wrapper}>
       <header className={[styles.header, styles['header--margin']].join(' ')}>
         <img className={styles.header__logo} src={logo} alt="logo" />
       </header>
+
       <main className={styles.main}>
         <Filters />
         <section className={styles['search-results']}>
           <RadioFilters />
+          <button
+            type="button"
+            className={styles['display-modal-button']}
+            onClick={() => {
+              setModalState(true)
+            }}
+          >
+            <div className={styles['content-button-wrapper']}>
+              <span>Пересадки</span>
+              <div className={styles['button-arrow']} />
+            </div>
+          </button>
           <TicketsList />
         </section>
       </main>
@@ -57,7 +64,8 @@ function App({ tickets, addTickets }) {
 const mapStateToProps = (store) => {
   return {
     tickets: store.tickets,
+    filter: store.filter,
   }
 }
 
-export default connect(mapStateToProps, ticketsActions)(App)
+export default connect(mapStateToProps, { ...ticketsActions, ...filtersActions })(App)

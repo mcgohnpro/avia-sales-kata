@@ -10,13 +10,25 @@ function Filters({
   setWithoutTransferFilter,
   setOneTransferFilter,
   setTwoTransferFilter,
+  setModalState,
 }) {
-  const { allTransfers, withoutTrasnfers, oneTransfer, twoTransfers } = filtersProps
+  const { allTransfers, withoutTrasnfers, oneTransfer, twoTransfers, displayModalTransfers } = filtersProps
+
   return (
     <>
-      <div className={styles.filter} />
-      <aside className={styles.aside}>
+      <div
+        className={!displayModalTransfers ? styles.filter : [styles.filter, styles['filter-modal-mode']].join(' ')}
+      />
+      <aside className={!displayModalTransfers ? styles.aside : [styles.aside, styles['aside-modal-mode']].join(' ')}>
         <p className={styles.header}>количество пересадок</p>
+        <button
+          onClick={() => {
+            setModalState(false)
+          }}
+          className={styles['close-modal-button']}
+          type="button"
+          aria-label="close modal window button"
+        />
         <ul className={styles.list}>
           <li className={styles['list-item']}>
             <label className={styles.label} htmlFor="1">

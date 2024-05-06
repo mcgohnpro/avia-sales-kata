@@ -17,7 +17,6 @@ const initialState = {
   tickets: [],
   stop: false,
 }
-// TODO либо вынести error или loading вернуть обратно
 const useFetch = () => {
   const retryFetchCount = useRef(RETRY_FETCH_COUNT)
   const searchID = useRef()
@@ -68,17 +67,6 @@ const useFetch = () => {
         })
         .then((json) => {
           retryFetchCount.current = RETRY_FETCH_COUNT
-          // setStatus((prevState) => {
-          //   return {
-          //     ...prevState,
-          //     data: {
-          //       tickets: json.tickets.map((item) => {
-          //         return { ...item, key: getId() }
-          //       }),
-          //       stop: json.stop,
-          //     },
-          //   }
-          // })
 
           setData({
             tickets: json.tickets.map((item) => {
@@ -118,7 +106,7 @@ const useFetch = () => {
     fetchNow()
   }, [])
 
-  return { data, loading, error, fetchNow }
+  return { data, loading, error }
 }
 
 export default useFetch

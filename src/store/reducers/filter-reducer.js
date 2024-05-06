@@ -1,4 +1,3 @@
-/* eslint-disable default-param-last */
 const initialState = {
   allTransfers: true,
   withoutTrasnfers: true,
@@ -6,10 +5,11 @@ const initialState = {
   twoTransfers: true,
   cheapest: false,
   fastest: false,
-  optimal: false,
+  displayModalTransfers: false,
 }
 
-const filterReducer = (state = initialState, { type }) => {
+// eslint-disable-next-line default-param-last
+const filterReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'ALL_TICKETS':
       return {
@@ -47,8 +47,8 @@ const filterReducer = (state = initialState, { type }) => {
     case 'FASTEST':
       return { ...state, cheapest: false, fastest: true, optimal: false }
 
-    case 'OPTIMAL':
-      return { ...state, cheapest: false, fastest: false, optimal: true }
+    case 'DISPLAY_MODAL':
+      return { ...state, displayModalTransfers: payload }
 
     default:
       return state

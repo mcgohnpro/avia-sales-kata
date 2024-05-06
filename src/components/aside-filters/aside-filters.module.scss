@@ -8,11 +8,19 @@
   bottom: 0;
   backdrop-filter: blur(4px);
   z-index: 1;
-  //TODO Добавить интерактив появления фильтра размытия
+  display: none;
   visibility: hidden;
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+.filter-modal-mode {
+  visibility: visible;
 }
 
 .aside {
+  position: relative;
   width: 232px;
   height: max-content;
   box-sizing: border-box;
@@ -20,12 +28,16 @@
   background-color: $content-background-color;
   border-radius: 5px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
-
   @media (max-width: 768px) {
     visibility: hidden;
-    position: absolute;
-    //TODO Добавить интерактив появления модального окна, которое будет запускаться по кнопке
+    position: fixed;
     z-index: 3;
+  }
+}
+
+.aside-modal-mode {
+  @media (max-width: 768px) {
+    visibility: visible;
   }
 }
 
@@ -88,4 +100,25 @@
   width: 20px;
   height: 20px;
   background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0.5' y='0.5' width='19' height='19' rx='1.5' stroke='%239ABBCE'/%3E%3C/svg%3E");
+}
+
+.close-modal-button {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: none;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  background-image: url("data:image/svg+xml,%3Csvg width='20px' height='20px' viewBox='0 0 32 32' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:sketch='http://www.bohemiancoding.com/sketch/ns'%3E%3Ctitle%3Ecross-square%3C/title%3E%3Cdesc%3ECreated with Sketch Beta.%3C/desc%3E%3Cdefs%3E%3C/defs%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' sketch:type='MSPage'%3E%3Cg id='Icon-Set' sketch:type='MSLayerGroup' transform='translate(-204.000000, -1035.000000)' fill='rgb(33, 150, 243)'%3E%3Cpath d='M224.95,1046.05 C224.559,1045.66 223.926,1045.66 223.536,1046.05 L220,1049.59 L216.464,1046.05 C216.074,1045.66 215.441,1045.66 215.05,1046.05 C214.66,1046.44 214.66,1047.07 215.05,1047.46 L218.586,1051 L215.05,1054.54 C214.66,1054.93 214.66,1055.56 215.05,1055.95 C215.441,1056.34 216.074,1056.34 216.464,1055.95 L220,1052.41 L223.536,1055.95 C223.926,1056.34 224.559,1056.34 224.95,1055.95 C225.34,1055.56 225.34,1054.93 224.95,1054.54 L221.414,1051 L224.95,1047.46 C225.34,1047.07 225.34,1046.44 224.95,1046.05 L224.95,1046.05 Z M234,1063 C234,1064.1 233.104,1065 232,1065 L208,1065 C206.896,1065 206,1064.1 206,1063 L206,1039 C206,1037.9 206.896,1037 208,1037 L232,1037 C233.104,1037 234,1037.9 234,1039 L234,1063 L234,1063 Z M232,1035 L208,1035 C205.791,1035 204,1036.79 204,1039 L204,1063 C204,1065.21 205.791,1067 208,1067 L232,1067 C234.209,1067 236,1065.21 236,1063 L236,1039 C236,1036.79 234.209,1035 232,1035 L232,1035 Z' id='cross-square' sketch:type='MSShapeGroup'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  &:active {
+    transform: scale(1.1);
+  }
+  @media (max-width: 768px) {
+    display: block;
+  }
 }

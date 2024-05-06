@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 
 import backgroundCloseButton from '../../../assets/close-square-svgrepo-com.svg'
 

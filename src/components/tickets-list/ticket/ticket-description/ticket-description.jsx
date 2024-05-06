@@ -15,11 +15,9 @@ export default function TicketDescription({ segments }) {
           {origin} - {destination}
         </div>
         <div className={styles.data}>
-          {`${dateTime.getHours()}`.padStart(2, 0)}
-          {`:${dateTime.getMinutes()}`.padStart(2, 0)}
+          {`${dateTime.getHours()}`.padStart(2, 0)}:{`${dateTime.getMinutes()}`.padStart(2, 0)}
           {' - '}
-          {`${dateTimeDestination.getHours()}`.padStart(2, 0)}
-          {`:${dateTimeDestination.getMinutes()}`.padStart(2, 0)}
+          {`${dateTimeDestination.getHours()}`.padStart(2, 0)}:{`${dateTimeDestination.getMinutes()}`.padStart(2, 0)}
         </div>
       </div>
       <div className={styles.column}>

@@ -6,7 +6,7 @@
   width: 100%;
   height: 4.8px;
   display: inline-block;
-  background: rgba(255, 255, 255, 0.15);
+  background: $background-loader;
   position: relative;
   overflow: hidden;
 }
@@ -14,7 +14,7 @@
   content: '';
   width: 0%;
   height: 4.8px;
-  background-color: #fff;
+  background-color: $content-background-color;
   background-image: linear-gradient(
     45deg,
     $font-color-secondary 25%,
