@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import * as filtersActions from '../../store/actions/filters-actions'
 
@@ -12,7 +13,7 @@ function Filters({
   setTwoTransferFilter,
   setModalState,
 }) {
-  const { allTransfers, withoutTrasnfers, oneTransfer, twoTransfers, displayModalTransfers } = filtersProps
+  const { allTransfers, withoutTransfers, oneTransfer, twoTransfers, displayModalTransfers } = filtersProps
 
   return (
     <>
@@ -49,7 +50,7 @@ function Filters({
                 className={styles['check-input']}
                 type="checkbox"
                 id="2"
-                checked={withoutTrasnfers}
+                checked={withoutTransfers}
                 onChange={setWithoutTransferFilter}
               />
               <span className={styles['check-box']} />
@@ -94,3 +95,33 @@ const mapStateToProps = (store) => {
   }
 }
 export default connect(mapStateToProps, filtersActions)(Filters)
+
+Filters.defaultProps = {
+  filtersProps: {
+    allTransfers: true,
+    withoutTransfers: true,
+    oneTransfer: true,
+    twoTransfers: true,
+    displayModalTransfers: false,
+  },
+  setAllTicketsFilter: () => {},
+  setWithoutTransferFilter: () => {},
+  setOneTransferFilter: () => {},
+  setTwoTransferFilter: () => {},
+  setModalState: () => {},
+}
+
+Filters.propTypes = {
+  filtersProps: PropTypes.shape({
+    allTransfers: PropTypes.bool,
+    withoutTransfers: PropTypes.bool,
+    oneTransfer: PropTypes.bool,
+    twoTransfers: PropTypes.bool,
+    displayModalTransfers: PropTypes.bool,
+  }),
+  setAllTicketsFilter: PropTypes.func,
+  setWithoutTransferFilter: PropTypes.func,
+  setOneTransferFilter: PropTypes.func,
+  setTwoTransferFilter: PropTypes.func,
+  setModalState: PropTypes.func,
+}

@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 import * as ticketsActions from '../../store/actions/tickets-actions'
-import noDataimage from '../../assets/EmptyIcon.svg'
 
 import Ticket from './ticket/ticket'
 import styles from './tickets-list.module.scss'
 
-function toFilterTickets(arr, { allTransfers, withoutTrasnfers, oneTransfer, twoTransfers }) {
+function toFilterTickets(arr, { allTransfers, withoutTransfers, oneTransfer, twoTransfers }) {
   if (allTransfers) {
     return arr
   }
@@ -15,7 +15,7 @@ function toFilterTickets(arr, { allTransfers, withoutTrasnfers, oneTransfer, two
     const forwardTransfers = ticket.segments[0].stops.length
     const backwardsTransfers = ticket.segments[1].stops.length
 
-    const withoutTransfersCondition = withoutTrasnfers ? !forwardTransfers && !backwardsTransfers : false
+    const withoutTransfersCondition = withoutTransfers ? !forwardTransfers && !backwardsTransfers : false
     const oneTransferCondition = oneTransfer ? forwardTransfers === 1 && backwardsTransfers === 1 : false
     const twoTransfersCondition = twoTransfers ? forwardTransfers === 2 && backwardsTransfers === 2 : false
     const oneOrTwoTransfersCondition =
@@ -43,11 +43,7 @@ function TicketsList({ tickets, filter }) {
   const filteredTickets = toFilterTickets(tickets, filter)
   toSortTickets(filteredTickets, filter)
   if (!filteredTickets.length)
-    return (
-      <div className={styles['no-data']} style={{ backgroundImage: `url(${noDataimage})` }}>
-        Поиск по заданным параметрам не дал результатов
-      </div>
-    )
+    return <div className={styles['no-data']}>Поиск по заданным параметрам не дал результатов</div>
   return (
     <>
       <ul className={styles['ticket-list']}>
@@ -77,3 +73,20 @@ const mapStateToProps = (store) => {
 }
 
 export default connect(mapStateToProps, ticketsActions)(TicketsList)
+
+TicketsList.defaultProps = {
+  tickets: [],
+}
+
+TicketsList.propTypes = {
+  tickets: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  filter: PropTypes.shape({
+    allTransfers: PropTypes.bool,
+    withoutTransfers: PropTypes.bool,
+    oneTransfer: PropTypes.bool,
+    twoTransfers: PropTypes.bool,
+    cheapest: PropTypes.bool,
+    fastest: PropTypes.bool,
+    displayModalTransfers: PropTypes.bool,
+  }).isRequired,
+}

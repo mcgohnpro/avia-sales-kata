@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import * as filterActions from '../../store/actions/filters-actions'
 
@@ -27,3 +28,21 @@ const mapStateToProps = (store) => {
 }
 
 export default connect(mapStateToProps, filterActions)(RadioFilters)
+
+RadioFilters.defaultProps = {
+  filtersRadio: {
+    cheapest: false,
+    fastest: false,
+  },
+  setCheapest: () => {},
+  setFastest: () => {},
+}
+
+RadioFilters.propTypes = {
+  filtersRadio: PropTypes.shape({
+    cheapest: PropTypes.bool,
+    fastest: PropTypes.bool,
+  }),
+  setCheapest: PropTypes.func,
+  setFastest: PropTypes.func,
+}

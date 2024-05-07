@@ -1,3 +1,5 @@
+import PropTypes, { objectOf } from 'prop-types'
+
 import TicketDescription from './ticket-description'
 import styles from './ticket.module.scss'
 
@@ -15,4 +17,16 @@ export default function Ticket({ ticket }) {
       {segments[1] ? <TicketDescription segments={segments[1]} /> : null}
     </li>
   )
+}
+
+Ticket.defaultProps = {
+  price: '',
+  carrier: '',
+  segments: [{}, {}],
+}
+
+Ticket.propTypes = {
+  price: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  carrier: PropTypes.string,
+  segments: PropTypes.arrayOf(objectOf(PropTypes.any)),
 }

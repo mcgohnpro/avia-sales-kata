@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import Filters from '../aside-filters'
 import RadioFilters from '../radio-filters'
@@ -69,3 +70,13 @@ const mapStateToProps = (store) => {
 }
 
 export default connect(mapStateToProps, { ...ticketsActions, ...filtersActions })(App)
+
+App.defaultProps = {
+  addTickets: () => {},
+  setModalState: () => {},
+}
+
+App.propTypes = {
+  addTickets: PropTypes.func,
+  setModalState: PropTypes.func,
+}

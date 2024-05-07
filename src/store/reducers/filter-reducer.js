@@ -1,6 +1,6 @@
 const initialState = {
   allTransfers: true,
-  withoutTrasnfers: true,
+  withoutTransfers: true,
   oneTransfer: true,
   twoTransfers: true,
   cheapest: false,
@@ -15,7 +15,7 @@ const filterReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allTransfers: !state.allTransfers,
-        withoutTrasnfers: !state.allTransfers,
+        withoutTransfers: !state.allTransfers,
         oneTransfer: !state.allTransfers,
         twoTransfers: !state.allTransfers,
       }
@@ -23,29 +23,29 @@ const filterReducer = (state = initialState, { type, payload }) => {
     case 'WITHOUT_TRANSFER':
       return {
         ...state,
-        withoutTrasnfers: !state.withoutTrasnfers,
-        allTransfers: state.oneTransfer && state.twoTransfers && !state.withoutTrasnfers,
+        withoutTransfers: !state.withoutTransfers,
+        allTransfers: state.oneTransfer && state.twoTransfers && !state.withoutTransfers,
       }
 
     case 'ONE_TRANSFER':
       return {
         ...state,
         oneTransfer: !state.oneTransfer,
-        allTransfers: state.withoutTrasnfers && state.twoTransfers && !state.oneTransfer,
+        allTransfers: state.withoutTransfers && state.twoTransfers && !state.oneTransfer,
       }
 
     case 'TWO_TRANSFER':
       return {
         ...state,
         twoTransfers: !state.twoTransfers,
-        allTransfers: state.withoutTrasnfers && state.oneTransfer && !state.twoTransfers,
+        allTransfers: state.withoutTransfers && state.oneTransfer && !state.twoTransfers,
       }
 
     case 'CHEAPEST':
-      return { ...state, cheapest: true, fastest: false, optimal: false }
+      return { ...state, cheapest: true, fastest: false }
 
     case 'FASTEST':
-      return { ...state, cheapest: false, fastest: true, optimal: false }
+      return { ...state, cheapest: false, fastest: true }
 
     case 'DISPLAY_MODAL':
       return { ...state, displayModalTransfers: payload }

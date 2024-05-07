@@ -1,4 +1,5 @@
 import { addMinutes } from 'date-fns'
+import PropTypes from 'prop-types'
 
 import formatStrimgTransfer from '../../../../utils/formatStringTransfer'
 
@@ -30,4 +31,20 @@ export default function TicketDescription({ segments }) {
       </div>
     </div>
   )
+}
+
+TicketDescription.defaultProps = {
+  origin: '',
+  destination: '',
+  date: '',
+  duration: 0,
+  stops: [],
+}
+
+TicketDescription.propTypes = {
+  origin: PropTypes.string,
+  destination: PropTypes.string,
+  date: PropTypes.string,
+  duration: PropTypes.number,
+  stops: PropTypes.arrayOf(PropTypes.string),
 }
