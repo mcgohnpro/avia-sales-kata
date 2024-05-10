@@ -1,6 +1,8 @@
+// TODO удалить хук после рефакторинга
+
 import { useState, useEffect, useRef } from 'react'
 
-import getId from '../utils/getId'
+import { getId } from '../utils/idGenerators'
 import { URL_API, API_ENDPOINT_SEARCH_ID, API_ENDPOINT_SEARCH_TICKETS } from '../constants/apiConstants'
 import SearchIdError from '../errors/getSearchIdError'
 import FetchError from '../errors/fetchError'

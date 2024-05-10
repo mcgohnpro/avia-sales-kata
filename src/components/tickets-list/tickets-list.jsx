@@ -1,42 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { connect } from 'react-redux'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import * as ticketsActions from '../../store/actions/tickets-actions'
+import { toFilterTickets, toSortTickets } from '../../utils/filters'
+import { createTicketId } from '../../utils/idGenerators'
 
 import Ticket from './ticket/ticket'
 import styles from './tickets-list.module.scss'
-
-function toFilterTickets(arr, { allTransfers, withoutTransfers, oneTransfer, twoTransfers }) {
-  if (allTransfers) {
-    return arr
-  }
-  return arr.filter((ticket) => {
-    const forwardTransfers = ticket.segments[0].stops.length
-    const backwardsTransfers = ticket.segments[1].stops.length
-
-    const withoutTransfersCondition = withoutTransfers ? !forwardTransfers && !backwardsTransfers : false
-    const oneTransferCondition = oneTransfer ? forwardTransfers === 1 && backwardsTransfers === 1 : false
-    const twoTransfersCondition = twoTransfers ? forwardTransfers === 2 && backwardsTransfers === 2 : false
-    const oneOrTwoTransfersCondition =
-      oneTransfer && twoTransfers
-        ? forwardTransfers >= 1 && forwardTransfers < 3 && backwardsTransfers >= 1 && backwardsTransfers < 3
-        : false
-
-    return withoutTransfersCondition || oneTransferCondition || twoTransfersCondition || oneOrTwoTransfersCondition
-  })
-}
-
-function toSortTickets(tickets, { cheapest, fastest }) {
-  if (cheapest) {
-    tickets.sort((a, b) => (a.price > b.price ? 1 : -1))
-  }
-  if (fastest) {
-    tickets.sort((a, b) =>
-      a.segments[0].duration + a.segments[1].duration > b.segments[0].duration + b.segments[1].duration ? 1 : -1
-    )
-  }
-}
 
 function TicketsList({ tickets, filter }) {
   const [displayedCountTickets, setDisplayedCountTickets] = useState(5)
@@ -48,7 +20,7 @@ function TicketsList({ tickets, filter }) {
     <>
       <ul className={styles['ticket-list']}>
         {filteredTickets.slice(0, displayedCountTickets).map((ticket) => {
-          return <Ticket key={ticket.key} ticket={ticket} />
+          return <Ticket key={createTicketId(ticket)} ticket={ticket} />
         })}
       </ul>
       <input

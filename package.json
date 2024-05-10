@@ -25,7 +25,8 @@
     "lint": "eslint -c .eslintrc.json --ext .js,.jsx .",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "serve": "serve -s build"
   },
   "browserslist": {
     "production": [

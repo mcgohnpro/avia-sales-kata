@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -7,29 +7,19 @@ import RadioFilters from '../radio-filters'
 import TicketsList from '../tickets-list'
 import Notification from '../notifications'
 import Loader from '../loader'
-import useFetch from '../../hooks/useFetch'
 import * as ticketsActions from '../../store/actions/tickets-actions'
 import * as filtersActions from '../../store/actions/filters-actions'
-import getId from '../../utils/getId'
+import * as commonStateActions from '../../store/actions/common-state-actions'
 import logo from '../../assets/Logo.png'
 
 import styles from './App.module.scss'
 
-function App({ addTickets, setModalState }) {
-  const [errors, setErrors] = useState([])
-  const { loading, data, error } = useFetch()
-  useEffect(() => {
-    addTickets(data.tickets)
-  }, [data])
+function App({ loadTickets, setModalState, commonState }) {
+  const { loading, errors } = commonState
 
   useEffect(() => {
-    if (error) {
-      error.id = getId()
-      setErrors((prevState) => {
-        return [...prevState, { id: getId(), title: error.name, message: error.message }]
-      })
-    }
-  }, [error])
+    loadTickets()
+  }, [])
 
   return (
     <div className={styles.wrapper}>
@@ -66,17 +56,32 @@ const mapStateToProps = (store) => {
   return {
     tickets: store.tickets,
     filter: store.filter,
+    commonState: store.commonState,
   }
 }
 
-export default connect(mapStateToProps, { ...ticketsActions, ...filtersActions })(App)
+export default connect(mapStateToProps, { ...ticketsActions, ...filtersActions, ...commonStateActions })(App)
 
 App.defaultProps = {
-  addTickets: () => {},
+  loadTickets: () => {},
   setModalState: () => {},
+  commonState: {
+    loading: false,
+    errors: [],
+  },
 }
 
 App.propTypes = {
-  addTickets: PropTypes.func,
+  loadTickets: PropTypes.func,
   setModalState: PropTypes.func,
+  commonState: PropTypes.shape({
+    loading: PropTypes.bool,
+    errors: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        title: PropTypes.string,
+        message: PropTypes.string,
+      })
+    ),
+  }),
 }

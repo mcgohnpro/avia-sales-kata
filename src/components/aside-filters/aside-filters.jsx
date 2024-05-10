@@ -2,18 +2,22 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import * as filtersActions from '../../store/actions/filters-actions'
+import * as commonStateActions from '../../store/actions/common-state-actions'
 
 import styles from './aside-filters.module.scss'
 
 function Filters({
   filtersProps,
+  commonStateProps,
   setAllTicketsFilter,
   setWithoutTransferFilter,
   setOneTransferFilter,
   setTwoTransferFilter,
+  setThreeTransferFilter,
   setModalState,
 }) {
-  const { allTransfers, withoutTransfers, oneTransfer, twoTransfers, displayModalTransfers } = filtersProps
+  const { allTransfers, withoutTransfers, oneTransfer, twoTransfers, threeTransfers } = filtersProps
+  const { displayModalTransfers } = commonStateProps
 
   return (
     <>
@@ -30,13 +34,14 @@ function Filters({
           type="button"
           aria-label="close modal window button"
         />
+        {/* TODO переименовать id в нормальный вид */}
         <ul className={styles.list}>
           <li className={styles['list-item']}>
-            <label className={styles.label} htmlFor="1">
+            <label className={styles.label} htmlFor="allTransfers">
               <input
                 className={styles['check-input']}
                 type="checkbox"
-                id="1"
+                id="allTransfers"
                 checked={allTransfers}
                 onChange={setAllTicketsFilter}
               />
@@ -45,11 +50,11 @@ function Filters({
             </label>
           </li>
           <li className={styles['list-item']}>
-            <label className={styles.label} htmlFor="2">
+            <label className={styles.label} htmlFor="withoutTransfers">
               <input
                 className={styles['check-input']}
                 type="checkbox"
-                id="2"
+                id="withoutTransfers"
                 checked={withoutTransfers}
                 onChange={setWithoutTransferFilter}
               />
@@ -58,11 +63,11 @@ function Filters({
             </label>
           </li>
           <li className={styles['list-item']}>
-            <label className={styles.label} htmlFor="3">
+            <label className={styles.label} htmlFor="oneTransfer">
               <input
                 className={styles['check-input']}
                 type="checkbox"
-                id="3"
+                id="oneTransfer"
                 checked={oneTransfer}
                 onChange={setOneTransferFilter}
               />
@@ -71,16 +76,29 @@ function Filters({
             </label>
           </li>
           <li className={styles['list-item']}>
-            <label className={styles.label} htmlFor="4">
+            <label className={styles.label} htmlFor="twoTransfers">
               <input
                 className={styles['check-input']}
                 type="checkbox"
-                id="4"
+                id="twoTransfers"
                 checked={twoTransfers}
                 onChange={setTwoTransferFilter}
               />
               <span className={styles['check-box']} />
               Две пересадки
+            </label>
+          </li>
+          <li className={styles['list-item']}>
+            <label className={styles.label} htmlFor="threeTransfers">
+              <input
+                className={styles['check-input']}
+                type="checkbox"
+                id="threeTransfers"
+                checked={threeTransfers}
+                onChange={setThreeTransferFilter}
+              />
+              <span className={styles['check-box']} />
+              Три пересадки
             </label>
           </li>
         </ul>
@@ -92,9 +110,10 @@ function Filters({
 const mapStateToProps = (store) => {
   return {
     filtersProps: store.filter,
+    commonStateProps: store.commonState,
   }
 }
-export default connect(mapStateToProps, filtersActions)(Filters)
+export default connect(mapStateToProps, { ...filtersActions, ...commonStateActions })(Filters)
 
 Filters.defaultProps = {
   filtersProps: {
@@ -102,12 +121,14 @@ Filters.defaultProps = {
     withoutTransfers: true,
     oneTransfer: true,
     twoTransfers: true,
+    threeTransfers: true,
     displayModalTransfers: false,
   },
   setAllTicketsFilter: () => {},
   setWithoutTransferFilter: () => {},
   setOneTransferFilter: () => {},
   setTwoTransferFilter: () => {},
+  setThreeTransferFilter: () => {},
   setModalState: () => {},
 }
 
@@ -117,11 +138,13 @@ Filters.propTypes = {
     withoutTransfers: PropTypes.bool,
     oneTransfer: PropTypes.bool,
     twoTransfers: PropTypes.bool,
+    threeTransfers: PropTypes.bool,
     displayModalTransfers: PropTypes.bool,
   }),
   setAllTicketsFilter: PropTypes.func,
   setWithoutTransferFilter: PropTypes.func,
   setOneTransferFilter: PropTypes.func,
   setTwoTransferFilter: PropTypes.func,
+  setThreeTransferFilter: PropTypes.func,
   setModalState: PropTypes.func,
 }
