@@ -1,13 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 
 import getId from '../utils/getId'
-import {
-  URL_API,
-  API_ENDPOINT_SEARCH_ID,
-  API_ENDPOINT_SEARCH_TICKETS,
-  RETRY_FETCH_COUNT,
-  DELAY_RETRY_FETCH,
-} from '../constants/apiConstants'
+import { URL_API, API_ENDPOINT_SEARCH_ID, API_ENDPOINT_SEARCH_TICKETS } from '../constants/apiConstants'
 import SearchIdError from '../errors/getSearchIdError'
 import FetchError from '../errors/fetchError'
 
@@ -18,7 +12,6 @@ const initialState = {
   stop: false,
 }
 const useFetch = () => {
-  const retryFetchCount = useRef(RETRY_FETCH_COUNT)
   const searchID = useRef()
   const [data, setData] = useState(initialState)
   const [loading, setLoading] = useState(false)
@@ -66,8 +59,6 @@ const useFetch = () => {
           throw new FetchError('Error to fetch data', response)
         })
         .then((json) => {
-          retryFetchCount.current = RETRY_FETCH_COUNT
-
           setData({
             tickets: json.tickets.map((item) => {
               return { ...item, key: getId() }
@@ -76,21 +67,15 @@ const useFetch = () => {
           })
 
           if (!json.stop) {
-            setTimeout(() => {
-              fetchNow()
-            }, 200)
+            fetchNow()
           } else {
             setLoading(false)
           }
         })
         .catch((err) => {
-          retryFetchCount.current -= 1
-          if (retryFetchCount.current > 0) {
-            setTimeout(() => {
-              fetchNow()
-            }, DELAY_RETRY_FETCH)
+          if (err.response.status === 500) {
+            fetchNow()
           } else {
-            setLoading(false)
             setError(err)
           }
         })
