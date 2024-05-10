@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 export function toFilterTickets(arr, { allTransfers, withoutTransfers, oneTransfer, twoTransfers, threeTransfers }) {
   if (allTransfers) {
     return arr
@@ -17,12 +16,14 @@ export function toFilterTickets(arr, { allTransfers, withoutTransfers, oneTransf
 }
 
 export function toSortTickets(tickets, { cheapest, fastest }) {
+  const sortedTickets = [...tickets]
   if (cheapest) {
-    tickets.sort((a, b) => (a.price > b.price ? 1 : -1))
+    sortedTickets.sort((a, b) => (a.price > b.price ? 1 : -1))
   }
   if (fastest) {
-    tickets.sort((a, b) =>
+    sortedTickets.sort((a, b) =>
       a.segments[0].duration + a.segments[1].duration > b.segments[0].duration + b.segments[1].duration ? 1 : -1
     )
   }
+  return sortedTickets
 }

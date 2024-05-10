@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 
 import Message from './message'
 import styles from './notifications.module.scss'
 
-export default function Notification({ errors }) {
+export default function Notifications() {
+  const { errors } = useSelector((store) => store.commonState)
+
   return (
     <div className={styles['wrapper-notiffications']}>
       {errors.map(({ title, message, id }) => {
@@ -11,18 +13,4 @@ export default function Notification({ errors }) {
       })}
     </div>
   )
-}
-
-Notification.defaultProps = {
-  errors: [],
-}
-
-Notification.propTypes = {
-  errors: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-      message: PropTypes.string,
-    })
-  ),
 }

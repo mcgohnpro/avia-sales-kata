@@ -1,3 +1,3 @@
-import Notification from './notifications'
+import Notifications from './notifications'
 
-export default Notification
+export default Notifications

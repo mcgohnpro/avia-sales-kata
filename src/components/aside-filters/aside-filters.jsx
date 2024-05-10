@@ -1,23 +1,16 @@
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
 
 import * as filtersActions from '../../store/actions/filters-actions'
 import * as commonStateActions from '../../store/actions/common-state-actions'
 
 import styles from './aside-filters.module.scss'
 
-function Filters({
-  filtersProps,
-  commonStateProps,
-  setAllTicketsFilter,
-  setWithoutTransferFilter,
-  setOneTransferFilter,
-  setTwoTransferFilter,
-  setThreeTransferFilter,
-  setModalState,
-}) {
-  const { allTransfers, withoutTransfers, oneTransfer, twoTransfers, threeTransfers } = filtersProps
-  const { displayModalTransfers } = commonStateProps
+export default function Filters() {
+  const { displayModalTransfers } = useSelector((store) => store.commonState)
+  const { allTransfers, withoutTransfers, oneTransfer, twoTransfers, threeTransfers } = useSelector(
+    (store) => store.filter
+  )
+  const dispatch = useDispatch()
 
   return (
     <>
@@ -28,13 +21,12 @@ function Filters({
         <p className={styles.header}>количество пересадок</p>
         <button
           onClick={() => {
-            setModalState(false)
+            dispatch(commonStateActions.setModalState(false))
           }}
           className={styles['close-modal-button']}
           type="button"
           aria-label="close modal window button"
         />
-        {/* TODO переименовать id в нормальный вид */}
         <ul className={styles.list}>
           <li className={styles['list-item']}>
             <label className={styles.label} htmlFor="allTransfers">
@@ -43,7 +35,9 @@ function Filters({
                 type="checkbox"
                 id="allTransfers"
                 checked={allTransfers}
-                onChange={setAllTicketsFilter}
+                onChange={() => {
+                  dispatch(filtersActions.setAllTicketsFilter())
+                }}
               />
               <span className={styles['check-box']} />
               Все
@@ -56,7 +50,9 @@ function Filters({
                 type="checkbox"
                 id="withoutTransfers"
                 checked={withoutTransfers}
-                onChange={setWithoutTransferFilter}
+                onChange={() => {
+                  dispatch(filtersActions.setWithoutTransferFilter())
+                }}
               />
               <span className={styles['check-box']} />
               Без пересадок
@@ -69,7 +65,9 @@ function Filters({
                 type="checkbox"
                 id="oneTransfer"
                 checked={oneTransfer}
-                onChange={setOneTransferFilter}
+                onChange={() => {
+                  dispatch(filtersActions.setOneTransferFilter())
+                }}
               />
               <span className={styles['check-box']} />
               Одна пересадка
@@ -82,7 +80,9 @@ function Filters({
                 type="checkbox"
                 id="twoTransfers"
                 checked={twoTransfers}
-                onChange={setTwoTransferFilter}
+                onChange={() => {
+                  dispatch(filtersActions.setTwoTransferFilter())
+                }}
               />
               <span className={styles['check-box']} />
               Две пересадки
@@ -95,7 +95,9 @@ function Filters({
                 type="checkbox"
                 id="threeTransfers"
                 checked={threeTransfers}
-                onChange={setThreeTransferFilter}
+                onChange={() => {
+                  dispatch(filtersActions.setThreeTransferFilter())
+                }}
               />
               <span className={styles['check-box']} />
               Три пересадки
@@ -105,46 +107,4 @@ function Filters({
       </aside>
     </>
   )
-}
-
-const mapStateToProps = (store) => {
-  return {
-    filtersProps: store.filter,
-    commonStateProps: store.commonState,
-  }
-}
-export default connect(mapStateToProps, { ...filtersActions, ...commonStateActions })(Filters)
-
-Filters.defaultProps = {
-  filtersProps: {
-    allTransfers: true,
-    withoutTransfers: true,
-    oneTransfer: true,
-    twoTransfers: true,
-    threeTransfers: true,
-    displayModalTransfers: false,
-  },
-  setAllTicketsFilter: () => {},
-  setWithoutTransferFilter: () => {},
-  setOneTransferFilter: () => {},
-  setTwoTransferFilter: () => {},
-  setThreeTransferFilter: () => {},
-  setModalState: () => {},
-}
-
-Filters.propTypes = {
-  filtersProps: PropTypes.shape({
-    allTransfers: PropTypes.bool,
-    withoutTransfers: PropTypes.bool,
-    oneTransfer: PropTypes.bool,
-    twoTransfers: PropTypes.bool,
-    threeTransfers: PropTypes.bool,
-    displayModalTransfers: PropTypes.bool,
-  }),
-  setAllTicketsFilter: PropTypes.func,
-  setWithoutTransferFilter: PropTypes.func,
-  setOneTransferFilter: PropTypes.func,
-  setTwoTransferFilter: PropTypes.func,
-  setThreeTransferFilter: PropTypes.func,
-  setModalState: PropTypes.func,
 }
