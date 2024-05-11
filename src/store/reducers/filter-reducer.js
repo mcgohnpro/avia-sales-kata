@@ -18,7 +18,7 @@ const filterReducer = (state = initialState, { type }) => {
         withoutTransfers: !state.allTransfers,
         oneTransfer: !state.allTransfers,
         twoTransfers: !state.allTransfers,
-        threeTransfers: !state.threeTransfers,
+        threeTransfers: !state.allTransfers,
       }
 
     case 'WITHOUT_TRANSFER':

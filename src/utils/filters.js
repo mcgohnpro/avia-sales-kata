@@ -1,17 +1,30 @@
-export function toFilterTickets(arr, { allTransfers, withoutTransfers, oneTransfer, twoTransfers, threeTransfers }) {
+export function toFilterTickets(tickets, filters) {
+  const { allTransfers, withoutTransfers, oneTransfer, twoTransfers, threeTransfers } = filters
+
   if (allTransfers) {
-    return arr
+    return tickets
   }
-  return arr.filter((ticket) => {
+  const selectedConditions = [withoutTransfers, oneTransfer, twoTransfers, threeTransfers].reduce(
+    (acc, condition, index) => {
+      if (condition) {
+        acc.push(index)
+      }
+      return acc
+    },
+    []
+  )
+
+  return tickets.filter((ticket) => {
     const forwardTransfers = ticket.segments[0].stops.length
     const backwardsTransfers = ticket.segments[1].stops.length
-
-    const withoutTransfersCondition = withoutTransfers && !forwardTransfers && !backwardsTransfers
-    const oneTransferCondition = oneTransfer && forwardTransfers === 1 && backwardsTransfers === 1
-    const twoTransfersCondition = twoTransfers && forwardTransfers === 2 && backwardsTransfers === 2
-    const threeTransfersCondition = threeTransfers && forwardTransfers === 3 && backwardsTransfers === 2
-
-    return withoutTransfersCondition || oneTransferCondition || twoTransfersCondition || threeTransfersCondition
+    return (
+      (forwardTransfers === selectedConditions[0] ||
+        forwardTransfers === selectedConditions[1] ||
+        forwardTransfers === selectedConditions[2]) &&
+      (backwardsTransfers === selectedConditions[0] ||
+        backwardsTransfers === selectedConditions[1] ||
+        backwardsTransfers === selectedConditions[2])
+    )
   })
 }
 
